@@ -93,6 +93,11 @@
     display: flex;
 }
 
+.aboveSectionTitle {
+    color: navy;
+    text-indent: 5px;
+}
+
 .searchedCityUl {
     padding: 0;
     margin: 0;
@@ -108,4 +113,60 @@
     margin-top: 2px;
     margin-bottom: 2px;
     border-bottom-style: 2px solid steelblue;
+}
+
+.dayContainer {
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-flow: wrap;
+}
+
+.dayBlock {
+    margin: 20px;
+    height: 190px;
+    max-width: 190px;
+    min-width: 190px;
+    background-color: darkblue;
+    color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+#invisibleDayBlock {
+    display: none;
+    background-color: transparent;
+}
+
+
+/* add invisible dayBlock to 'left justify' wrap row */
+@media screen and (max-width: 952px) {  
+    #invisibleDayBlock {
+        display: block;
+    }
+
+}
+
+
+@media screen and (max-width: 590px) {  
+
+    .dayContainer {
+        flex-direction: column;
+        flex-flow: column;
+    }
+
+    .dayBlock {
+        max-width: 90%;
+        min-width: 90%;
+        margin: 10px;
+    }
+}
+
+
+
+.forecastIcon {
+    padding-bottom: 5px;
 }
