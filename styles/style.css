@@ -3,6 +3,7 @@
     width: 100%;
     background-color: whitesmoke;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: navy;
 }
 
 .siteHeader {    
@@ -93,6 +94,34 @@
     display: flex;
 }
 
+.titleSectionContainer {
+    text-indent: 5px;
+    flex-direction: column;
+}
+
+.todaySectionTitle {
+    padding-bottom: 15px;
+}
+
+
+.titleCaption {
+    font-size: 17px;
+    font-weight: 500;
+    width: 140px;
+    text-align: left;
+}
+
+.titleTag {
+    width: 20px;
+}
+
+.titleSectionRow {
+    margin-left: 5px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+}
+
 .aboveSectionTitle {
     color: navy;
     text-indent: 5px;
@@ -136,6 +165,10 @@
     align-items: center;
 }
 
+.dayBlockCaption {
+    font-size: 13px;
+}
+
 #invisibleDayBlock {
     display: none;
     background-color: transparent;
@@ -143,7 +176,7 @@
 
 
 /* add invisible dayBlock to 'left justify' wrap row */
-@media screen and (max-width: 952px) {  
+@media screen and (max-width: 972px) {  
     #invisibleDayBlock {
         display: block;
     }
@@ -169,4 +202,20 @@
 
 .forecastIcon {
     padding-bottom: 5px;
+}
+
+.uvIndexContainer {
+    height: 50px;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+}
+
+.uvIndexBlock {
+    height: 30px;
+    width: 70px;
+    color: white;
+    background-color: darkorange;
+    text-align: center;
+    padding-top: 4px;
 }
