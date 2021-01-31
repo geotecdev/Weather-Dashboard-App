@@ -1,3 +1,4 @@
+//element variables
 let historyBtn;
 let searchInputEl;
 let searchBtn;
@@ -8,6 +9,8 @@ let tempCaptionEl;
 let humidityCaptionEl;
 let windSpeedCaptionEl;
 let uvIndexCaptionEl;
+
+let searchHistoryStrs = [];
 
 window.onload = function() {
     //get document elements
@@ -23,6 +26,7 @@ window.onload = function() {
     uvIndexCaptionEl = document.querySelector("#uvIndexCaption");
 
     //attach event listeners
+    searchBtn.addEventListener("click", submitSearch)
 
     //ui events
     searchInputEl.addEventListener("focus", function() {
@@ -33,7 +37,33 @@ window.onload = function() {
         searchInputEl.setAttribute("placeholder", "Search city");
     })
 
+    //get search history from local storage
+    resetSearchHistory();
+
+}
+
+// #### functions
+
+function resetSearchHistory() {
+    //check if local storage contains list of search text record
+    let searchHistoryJsonStr = localStorage.getItem("searchHistoryStrs");
+    if (searchHistoryJsonStr != null) {
+        searchHistoryStrs = JSON.parse(searchHistoryJsonStr);
+    } else {
+        //set ls value if none exists
+        localStorage.setItem("searchHistoryStrs", JSON.stringify(searchHistoryStrs));
+    }
+
+    //for each serach history string, set a button in modal
+}
+
+function submitSearch() {
+    let searchText = searchInputEl.value;
+    
 }
 
 
-// ## 
+// ## generic
+function changeElementVisibility(el, displayStyle) {
+    el.style.display = displayStyle;
+}
