@@ -10,6 +10,12 @@ let humidityCaptionEl;
 let windSpeedCaptionEl;
 let uvIndexCaptionEl;
 
+//search history modal vars
+let searchModalEl;
+let searchModalBody;
+let closeSpan;
+let searchModalBgCoverEl;
+
 let searchHistoryStrs = [];
 
 window.onload = function() {
@@ -25,10 +31,22 @@ window.onload = function() {
     windSpeedCaptionEl = document.querySelector("#windSpeedCaption");
     uvIndexCaptionEl = document.querySelector("#uvIndexCaption");
 
+    searchModalEl = document.querySelector("#searchModal");
+    searchModalBody = document.querySelector("#searchModalBody")
+    closeSpan = document.querySelector("#closeSpan");
+    searchModalBgCoverEl = document.querySelector("#searchModalBgCover");
+
+    searchModalBgCoverEl.style.display = "none";
+
+    //get search history from local storage
+    resetSearchHistory();
+
     //attach event listeners
+    historyBtn.addEventListener("click", showHistoryModal)
     searchBtn.addEventListener("click", submitSearch)
 
-    //ui events
+    //## ui events
+    // seach input placeholder toggle
     searchInputEl.addEventListener("focus", function() {
         searchInputEl.setAttribute("placeholder", "");      
     });
@@ -37,9 +55,19 @@ window.onload = function() {
         searchInputEl.setAttribute("placeholder", "Search city");
     })
 
-    //get search history from local storage
-    resetSearchHistory();
+    //close search history modal span
+    closeSpan.addEventListener("click", function() {
+        changeElementVisibility(searchModalBgCoverEl, "none");
+    });
+    
+    searchModalBgCoverEl.addEventListener("click", function() {
+        changeElementVisibility(searchModalBgCoverEl, "none");
+    });
 
+    // modal vis ui
+    function showHistoryModal(searchHistoryArr) {
+        changeElementVisibility(searchModalBgCoverEl, "block");
+    }
 }
 
 // #### functions
@@ -57,10 +85,14 @@ function resetSearchHistory() {
     //for each serach history string, set a button in modal
 }
 
+
+
 function submitSearch() {
     let searchText = searchInputEl.value;
     
 }
+
+// ## modal ui
 
 
 // ## generic
