@@ -33,23 +33,26 @@
 .searchInputContainer {
     margin-left: 5px;
     height: 40px;
-    max-width: 270px;
+    max-width: 270px;    
     display: flex;
+    align-items: left;
     flex-direction: column;    
 }
 
 #historyBtn, #searchBtn {
     margin-left: 5px;
-    width: 40px;
     font-size: 14px;
     height: 40px;
+    width: 50px;
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: lightsteelblue;
     border: 0px solid transparent;
     color: navy;
     display: block;
+    float: left;
 }
+
 
 #historyBtn:hover,
 #searchBtn:hover {
@@ -239,28 +242,43 @@
     border: 1px solid #888;
     margin-left: auto;
     margin-right: auto;
-    width: 250px;
-    min-height: 150px;
-    z-index: 10;
+    width: 320px;
+    min-height: 280px;
+    z-index: 10;    
+    flex-direction: column; 
 }
 
 #searchModalBody {
     size: 22px;
     font-weight: bold;
     color: navy;
-    text-indent: 5px;    
+    text-indent: 5px;
 }
 
-#closeSpan {
+.searchHistoryBtn {
+    height: 30px;
+    flex: 1;
+    background-color: azure;
+    border: 1px solid steelblue;
+    margin: 10px;
+}
+
+#closeBtn {
     color: #aaaaaa;
     float: right;
-    font-size: 28px;
+    height: 30px;
+    flex: 1;
+    background-color: ghostwhite;
+    color: lightslategray;
+    border: 1px solid firebrick;
+    margin: 10px;
     font-weight: bold;
 }
-
-.closeSpan:hover
-.closeSpan:focus {
-    color: #000;
+ 
+#closeBtn:hover
+#closeBtn:focus {
+    background-color: steelblue;
+    color: navy;
     text-decoration: none;
     cursor: pointer;
 }
