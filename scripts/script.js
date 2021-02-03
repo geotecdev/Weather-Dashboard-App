@@ -47,9 +47,13 @@ window.onload = function() {
         //submitSearch();
 
         //let city = getCity("Pittsburgh");
-        let city = getCity("Portland");
+        let cityName = searchInputEl.value;
+        let city = getCity(cityName);
         console.log(city);
-        //console.log(city);
+
+        //getForecasts(city.lat, city.lng);
+        getForecasts(40.44, -79.99);
+        console.log("end test");
     });
 
     //## ui events
@@ -151,7 +155,7 @@ function getCity(cityName) {
         "lat": 0,
         "lng": 0
     };
-
+                 //https://api.opencagedata.com/geocode/v1/json?q=pittsburgh&key=bb67ff620d0e482f8c938020e4aa33d7
     let rootUrl = "https://api.opencagedata.com/geocode/v1/json?q=";
     let apiKey = "bb67ff620d0e482f8c938020e4aa33d7";
 
@@ -173,12 +177,15 @@ function getCity(cityName) {
                 }
             }
         }
+    })
+    .catch(function(error) {
+        console.log(error);
     });
 
     return city;
 }
 
-function getForecasts(lat, lng, apiKey) {
+function getForecasts(lat, lng) {
     let rootUrl = "https://weatherbit-v1-mashape.p.rapidapi.com/forecast/daily";
 
     //api fetch & convert to dto
@@ -193,7 +200,7 @@ function getForecasts(lat, lng, apiKey) {
         return response.json();
     })
     .then(function(data) {
-
+        console.log(data);
     });
     
 
