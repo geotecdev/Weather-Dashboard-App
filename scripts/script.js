@@ -49,11 +49,9 @@ window.onload = function() {
         //let city = getCity("Pittsburgh");
         let cityName = searchInputEl.value;
         let city = getCity(cityName);
-        console.log(city);
+        let forecasts = getForecasts(city.lat, city.lng);
 
-        //getForecasts(city.lat, city.lng);
-        getForecasts(40.44, -79.99);
-        console.log("end test");
+        
     });
 
     //## ui events
@@ -155,7 +153,7 @@ function getCity(cityName) {
         "lat": 0,
         "lng": 0
     };
-                 //https://api.opencagedata.com/geocode/v1/json?q=pittsburgh&key=bb67ff620d0e482f8c938020e4aa33d7
+
     let rootUrl = "https://api.opencagedata.com/geocode/v1/json?q=";
     let apiKey = "bb67ff620d0e482f8c938020e4aa33d7";
 
@@ -200,10 +198,11 @@ function getForecasts(lat, lng) {
         return response.json();
     })
     .then(function(data) {
-        console.log(data);
+        return data.reults;
     });
     
-
-    //high_temp
-    //?lat=" + lat + "&lon=" + lng + "&units=imperial&lang=en"
 }
+
+//chris: front end styling
+//steph: responsive layout
+//a
