@@ -46,13 +46,41 @@ window.onload = function() {
         
         //get current weather and city coords from current day "2.5/weather?q=" api call
         const currentWeatherApiPath = currentWeatherUrl + cityName.toLowerCase() + apiKey;
-        
+        fetch(currentWeatherApiPath)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(currentWeather) {
+            console.log(currentWeather);
+
+            //set current day header ui elements
+
+
+            let lat = currentWeather.coord.lat;
+            let lon = currentWeather.coord.lon;
+
+            //use lat and lon as qstring params for onecall fetch
+            const onecallApiPath = onecallUrl + "lat=" + lat + "&lon=" + lon + apiKey;
+            fetch(onecallApiPath)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(onecall) {
+                console.log(onecall);
+
+            });
+
+        });
+
+        // console.log(searchHistoryStrs);
+        // console.log(currentWeatherResults);
+        // console.log(onecallResults);
+
     });
 
     //## ui events
     // seach input placeholder toggle
     searchInput.addEventListener("focus", function() {
-        console.log("test");
         searchInput.setAttribute("placeholder", "");      
     });
 
