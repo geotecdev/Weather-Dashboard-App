@@ -1,53 +1,40 @@
 //element variables
 let historyBtn;
-let searchInputEl;
+let searchInput;
 let searchBtn;
-let searchedCitiesModalEl;
-let modalBodyEl;
-let todaySectionTitleEl;
-let tempCaptionEl;
-let humidityCaptionEl;
-let windSpeedCaptionEl;
-let uvIndexCaptionEl;
-
-//search history modal vars
-let searchModalEl;
-let searchModalBody;
-let closeBtn;
-let searchModalBgCoverEl;
+let searchedCitiesModal;
+let modalBody;
+let todaySectionTitle;
+let tempCaption;
+let humidityCaption;
+let windSpeedCaption;
+let uvIndexCaption;
 
 let searchHistoryStrs = [""];
 
 window.onload = function() {
     //get document elements
     historyBtn = document.querySelector("#historyBtn");
-    searchInputEl = document.querySelector("#searchInput");
+    searchInput = document.querySelector("#searchInput");
     searchBtn = document.querySelector("#searchBtn");
-    searchedCitiesModalEl = document.querySelector("#searchedCitiesModal");
-    modalBodyEl = document.querySelector("#modalBody");
-    todaySectionTitleEl = document.querySelector("#todaySectionTitle");
-    tempCaptionEl = document.querySelector("#tempCaption");
-    humidityCaptionEl = document.querySelector("#humidityCaption");
-    windSpeedCaptionEl = document.querySelector("#windSpeedCaption");
-    uvIndexCaptionEl = document.querySelector("#uvIndexCaption");
-
-    searchModalEl = document.querySelector("#searchModal");
-    searchModalBody = document.querySelector("#searchModalBody")
-    closeBtn = document.querySelector("#closeBtn");
-    searchModalBgCoverEl = document.querySelector("#searchModalBgCover");
-
-    searchModalBgCoverEl.style.display = "none";
+    searchedCitiesModal = document.querySelector("#searchedCitiesModal");
+    modalBody = document.querySelector("#modalBody");
+    todaySectionTitle = document.querySelector("#todaySectionTitle");
+    tempCaption = document.querySelector("#tempCaption");
+    humidityCaption = document.querySelector("#humidityCaption");
+    windSpeedCaption = document.querySelector("#windSpeedCaption");
+    uvIndexCaption = document.querySelector("#uvIndexCaption");
 
     //get search history from local storage
-    //resetSearchHistory();
+    resetSearchHistory();
 
     //attach event listeners
-    historyBtn.addEventListener("click", showHistoryModal)
+    // search button - app main method
     searchBtn.addEventListener("click", function(){
         //submitSearch();
 
         //let city = getCity("Pittsburgh");
-        let cityName = searchInputEl.value;
+        let cityName = searchInput.value;
         let city = getCity(cityName);
         let forecasts = getForecasts(city.lat, city.lng);
 
@@ -56,28 +43,14 @@ window.onload = function() {
 
     //## ui events
     // seach input placeholder toggle
-    searchInputEl.addEventListener("focus", function() {
+    searchInput.addEventListener("focus", function() {
         console.log("test");
-        searchInputEl.setAttribute("placeholder", "");      
+        searchInput.setAttribute("placeholder", "");      
     });
 
-    searchInputEl.addEventListener("blur", function() {
-        searchInputEl.setAttribute("placeholder", "Search city");
-    })
-
-    //close search history modal span
-    closeBtn.addEventListener("click", function() {
-        changeElementVisibility(searchModalBgCoverEl, "none");
+    searchInput.addEventListener("blur", function() {
+        searchInput.setAttribute("placeholder", "Search city");
     });
-    
-    searchModalBgCoverEl.addEventListener("click", function() {
-        changeElementVisibility(searchModalBgCoverEl, "none");
-    });
-
-    // modal vis ui
-    function showHistoryModal(searchHistoryArr) {
-        changeElementVisibility(searchModalBgCoverEl, "block");
-    }
 }
 
 // #### functions
@@ -100,15 +73,15 @@ function resetSearchHistory() {
         let searchStr = searchHistoryStrs[i];
         let ssBtn = document.createElement("button");
         ssBtn.classList = "searchHistoryBtn"
-        if (ssBtn !== null && modalBodyEl != null) {
-            modalBodyEl.appendChild(ssBtn);
+        if (ssBtn !== null && modalBody != null) {
+            modalBody.appendChild(ssBtn);
         }
     }
 }
 
 
 function submitSearch() {
-    let searchText = searchInputEl.value;
+    let searchText = searchInput.value;
     if (strArrContains(searchHistoryStrs, searchText)) {
         return;
     } else {
