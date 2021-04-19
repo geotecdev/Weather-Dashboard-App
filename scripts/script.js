@@ -12,6 +12,10 @@ let uvIndexCaption;
 
 let searchHistoryStrs = [""];
 
+const currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?units=imperial&q=";
+const onecallUrl = "https://api.openweathermap.org/data/2.5/onecall?units=imperial&";
+const apiKey = "&appid=d2859c08329856077f40292bd485d4e7";
+
 window.onload = function() {
     //get document elements
     historyBtn = document.querySelector("#historyBtn");
@@ -25,19 +29,23 @@ window.onload = function() {
     windSpeedCaption = document.querySelector("#windSpeedCaption");
     uvIndexCaption = document.querySelector("#uvIndexCaption");
 
-    //get search history from local storage
-    resetSearchHistory();
+    //when window loads, get search history from local storage, set searchHistoryStrs to arr
+    getSearchHistory();
 
     //attach event listeners
     // search button - app main method
-    searchBtn.addEventListener("click", function(){
-        submitSearch();
+    searchBtn.addEventListener("click", function() {
 
-        //let city = getCity("Pittsburgh");
+        //localstorage logic for search history
         let cityName = searchInput.value;
-        let city = getCity(cityName);
-        let forecasts = getForecasts(city.lat, city.lng);
-
+        let nameExists = stringArrContains(searchHistoryStrs, cityName);
+        if (!nameExists) {
+            searchHistoryStrs.push(cityName);
+            updateSearchHistory(searchHistoryStrs);
+        }
+        
+        //get current weather and city coords from current day "2.5/weather?q=" api call
+        const currentWeatherApiPath = currentWeatherUrl + cityName.toLowerCase() + apiKey;
         
     });
 
@@ -54,24 +62,18 @@ window.onload = function() {
 }
 
 // #### functions
-
-function resetSearchHistory() {
-    //check if local storage contains list of search text record
-
+function getSearchHistory() {
     let searchHistoryJsonStr = localStorage.getItem("searchHistoryStrs");
     if (searchHistoryJsonStr !== null) {
-        
-        //test
-        console.log(searchHistoryJsonStr);
-
         searchHistoryStrs = JSON.parse(searchHistoryJsonStr);
     } else {
-        //set ls value if none exists
-        searchHistoryStrs = [];
+        //set default if value if none exists
+        searchHistoryStrs = [""];
         localStorage.setItem("searchHistoryStrs", searchHistoryStrs);
     }
 
     //for each serach history string, set a button in modal
+    modalBody.innerHTML = "";
     for (let i = 0; i < searchHistoryStrs.length; i++) {
         let searchStr = searchHistoryStrs[i];
         let ssBtn = document.createElement("button");
@@ -83,106 +85,35 @@ function resetSearchHistory() {
     }
 }
 
-
-function submitSearch() {
-    let searchText = searchInput.value;
-    if (strArrContains(searchHistoryStrs, searchText)) {
-        return;
-    } else {
-        searchHistoryStrs.push(searchText);
-
-        console.log(searchText);
-
-        resetSearchHistory();
+function updateSearchHistory(allSearchStrsArr) {
+    let searchHistoryJsonStr = localStorage.getItem("searchHistoryStrs");
+    if (searchHistoryJsonStr !== null) {
+        //searchHistoryStrs = JSON.parse(searchHistoryJsonStr);
+        localStorage.setItem("searchHistoryStrs", JSON.stringify(allSearchStrsArr));
     }
-    
+
+    getSearchHistory();
 }
 
-// ## modal ui
+// ## api functions
+
 
 
 // ## generic
-function titleCase(str) {
-    let tcResult = "";
-    for (let i = 0; i < str.length; i++) {
-        let oneChar = str[i];
-        if (i === 0) {
-            tcResult += String.toUpperCase(oneChar)
-        } else {
-            tcResult += String.toLowerCase(oneChar)
+function stringArrContains(strArr, matchStr) {
+    let fResult = false;
+
+    for (let i = 0; i < strArr.length; i++) {
+        let item = strArr[i];
+        if (matchStr.toLowerCase() === item.toLowerCase()) {
+            fResult = true;
+            break;
         }
     }
 
-    return tcResult;
-}
-
-function strArrContains(strArr, matchStr) {
-    let fResult = false;
-    for (let i = 0; i < strArr.length; i++)
     return fResult;
 }
 
 function changeElementVisibility(el, displayStyle) {
     el.style.display = displayStyle;
 }
-
-// ## api functions
-function getCity(cityName) {
-    let city = {
-        "name": "",
-        "lat": 0,
-        "lng": 0
-    };
-
-    let rootUrl = "https://api.opencagedata.com/geocode/v1/json?q=";
-    let apiKey = "bb67ff620d0e482f8c938020e4aa33d7";
-
-    //api fetch & convert to dto
-    fetch(rootUrl + cityName.toLowerCase() +"&key=" + apiKey)
-        .then(function(response) {
-            return response.json();
-    })
-    .then(function(data) {
-        if (data.results.length > 0)
-        {
-            //first city name match result. (data ordered desc by population)
-            let firstMatch = data.results[0];
-            if (firstMatch != null && firstMatch != undefined) {
-                if (firstMatch.components != null && firstMatch.geometry != null) {
-                    city.name = firstMatch.components.city;
-                    city.lat = firstMatch.geometry.lat;
-                    city.lng = firstMatch.geometry.lng;
-                }
-            }
-        }
-    })
-    .catch(function(error) {
-        console.log(error);
-    });
-
-    return city;
-}
-
-function getForecasts(lat, lng) {
-    let rootUrl = "https://weatherbit-v1-mashape.p.rapidapi.com/forecast/daily";
-
-    //api fetch & convert to dto
-    fetch(rootUrl + "?lat=" + lat + "&lon=" + lng + "&units=imperial&lang=en", {
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-key": "a1bf5f60f3mshd4fde2ec05bae2dp1e4d2fjsnd5b3a9a73204",
-            "x-rapidapi-host": "weatherbit-v1-mashape.p.rapidapi.com"
-        }
-    })
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(data) {
-        return data.reults;
-    });
-    
-}
-
-//chris: front end styling
-//steph: responsive layout
-//a
