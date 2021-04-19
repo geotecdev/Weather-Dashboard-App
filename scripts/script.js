@@ -32,9 +32,10 @@ window.onload = function() {
     //when window loads, get search history from local storage, set searchHistoryStrs to arr
     getSearchHistory();
 
-    //attach event listeners
-    // search button - app main method
+    //# attach event listeners
+    //search button - app main method
     searchBtn.addEventListener("click", function() {
+        let todayDt = new Date();
 
         //localstorage logic for search history
         let cityName = searchInput.value;
@@ -53,8 +54,12 @@ window.onload = function() {
         .then(function(currentWeather) {
             console.log(currentWeather);
 
-            //set current day header ui elements
-
+            //# set current day header ui elements
+            //todaySectionTitle - Pittsburgh (4/19/2021)
+            todaySectionTitle.innerHTML = titleCase(cityName) +  " (" + todayDt.toLocaleDateString() + ")";
+            tempCaption.innerHTML = currentWeather.main.temp;
+            humidityCaption.innerHTML = currentWeather.main.humidity;
+            windSpeedCaption.innerHTML = currentWeather.wind.speed;            
 
             let lat = currentWeather.coord.lat;
             let lon = currentWeather.coord.lon;
@@ -66,8 +71,9 @@ window.onload = function() {
                 return response.json();
             })
             .then(function(onecall) {
-                console.log(onecall);
+                //set forecast thumbnail blocks ui with onecall data
 
+                //uvIndexCaption.innerHTML = currentWeather.
             });
 
         });
@@ -123,11 +129,22 @@ function updateSearchHistory(allSearchStrsArr) {
     getSearchHistory();
 }
 
-// ## api functions
-
-
 
 // ## generic
+function titleCase(str) {
+    let tcResult = "";
+    for (let i = 0; i < str.length; i++) {
+        let oneChar = str[i];
+        if (i === 0) {
+            tcResult += oneChar.toUpperCase();
+        } else {
+            tcResult += oneChar.toLowerCase();
+        }
+    }
+
+    return tcResult;
+}
+
 function stringArrContains(strArr, matchStr) {
     let fResult = false;
 
