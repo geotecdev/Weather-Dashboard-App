@@ -257,6 +257,7 @@
 
 .searchHistoryBtn {
     height: 30px;
+    width: 120px;
     flex: 1;
     background-color: azure;
     border: 1px solid steelblue;

@@ -31,7 +31,7 @@ window.onload = function() {
     //attach event listeners
     // search button - app main method
     searchBtn.addEventListener("click", function(){
-        //submitSearch();
+        submitSearch();
 
         //let city = getCity("Pittsburgh");
         let cityName = searchInput.value;
@@ -60,7 +60,10 @@ function resetSearchHistory() {
 
     let searchHistoryJsonStr = localStorage.getItem("searchHistoryStrs");
     if (searchHistoryJsonStr !== null) {
+        
+        //test
         console.log(searchHistoryJsonStr);
+
         searchHistoryStrs = JSON.parse(searchHistoryJsonStr);
     } else {
         //set ls value if none exists
@@ -73,6 +76,7 @@ function resetSearchHistory() {
         let searchStr = searchHistoryStrs[i];
         let ssBtn = document.createElement("button");
         ssBtn.classList = "searchHistoryBtn"
+        ssBtn.innerHTML = searchStr;
         if (ssBtn !== null && modalBody != null) {
             modalBody.appendChild(ssBtn);
         }
@@ -86,6 +90,9 @@ function submitSearch() {
         return;
     } else {
         searchHistoryStrs.push(searchText);
+
+        console.log(searchText);
+
         resetSearchHistory();
     }
     
