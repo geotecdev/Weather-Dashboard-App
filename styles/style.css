@@ -115,7 +115,8 @@
 }
 
 .titleTag {
-    width: 20px;
+    width: 35px;
+    margin-left: 10px;
 }
 
 .titleSectionRow {

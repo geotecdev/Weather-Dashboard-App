@@ -52,8 +52,6 @@ window.onload = function() {
             return response.json();
         })
         .then(function(currentWeather) {
-            console.log(currentWeather);
-
             //# set current day header ui elements
             //todaySectionTitle - Pittsburgh (4/19/2021)
             todaySectionTitle.innerHTML = titleCase(cityName) +  " (" + todayDt.toLocaleDateString() + ")";
@@ -71,9 +69,44 @@ window.onload = function() {
                 return response.json();
             })
             .then(function(onecall) {
-                //set forecast thumbnail blocks ui with onecall data
+                //get uv index for current day
+                uvIndexCaption.innerHTML = onecall.daily[0].uvi;
 
-                //uvIndexCaption.innerHTML = currentWeather.
+                //set forecast thumbnail blocks ui with onecall data
+                let dayBlocks = document.querySelectorAll(".dayBlock");
+                console.log(dayBlocks);
+
+                for (let i = 1; i < dayBlocks.length; i++) {                    
+                    let ocDate = onecall.daily[i];                    
+                    let block = dayBlocks[i - 1];
+                    block.innerHTML = "";
+
+                    //shortdate
+                    let dt = addDays(todayDt, i);
+                    let dateCaption = document.createElement("h4");
+                    dateCaption.classList = "dayBlockDate";
+                    dateCaption.innerHTML = dt.toLocaleDateString();
+                    block.appendChild(dateCaption);
+
+                    //icon
+                    let blockImg = document.createElement("img");
+                    blockImg.classList = "forecastIcon";
+                    blockImg.setAttribute("src", "./images/sun.png");
+                    block.appendChild(blockImg);
+
+                    //temp
+                    let tempCaption = document.createElement("p");
+                    tempCaption.classList = "dayBlockCaption";
+                    tempCaption.innerHTML = `Temp: ${ocDate.temp.max} <span>&#8457</span>`;
+                    block.appendChild(tempCaption);
+
+                    //humidity
+                    let humidityCaption = document.createElement("p");
+                    humidityCaption.classList = "dayBlockCaption";
+                    humidityCaption.innerHTML = `Humidity: ${ocDate.humidity} <span>%</span>`;
+                    block.appendChild(humidityCaption);
+                }
+
             });
 
         });
@@ -131,6 +164,12 @@ function updateSearchHistory(allSearchStrsArr) {
 
 
 // ## generic
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
+
 function titleCase(str) {
     let tcResult = "";
     for (let i = 0; i < str.length; i++) {
