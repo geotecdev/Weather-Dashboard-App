@@ -15,10 +15,10 @@ https://geotecdev.github.io/weather-dashboard-app
 
 App screenshots
 dashboard
-![dashboard screenshot](./images/dashboard.png)
+![dashboard screenshot](./images/dashboard.PNG)
 
 search history modal
-![search history modal screenshot](./images/search-history-modal.png)
+![search history modal screenshot](./images/search-history-modal.PNG)
 
 License
 Copyright (c) 2021 Mike Ruane (geotecdev)
