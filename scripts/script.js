@@ -10,7 +10,7 @@ let humidityCaption;
 let windSpeedCaption;
 let uvIndexCaption;
 
-let searchHistoryStrs = [""];
+let searchHistoryStrs = ["philadelphia"];
 
 const currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?units=imperial&q=";
 const onecallUrl = "https://api.openweathermap.org/data/2.5/onecall?units=imperial&";
@@ -70,7 +70,13 @@ window.onload = function() {
             })
             .then(function(onecall) {
                 //get uv index for current day
-                uvIndexCaption.innerHTML = onecall.daily[0].uvi;
+                const uvi = onecall.daily[0].uvi;                
+                uvIndexCaption.innerHTML = uvi;
+                if (uvi > 8) {
+                    uvIndexCaption.style.backgroundColor = "red";
+                } else if (uvi > 5) {
+                    uvIndexCaption.style.backgroundColor = "darkorange";
+                }
 
                 //set forecast thumbnail blocks ui with onecall data
                 let dayBlocks = document.querySelectorAll(".dayBlock");
@@ -136,7 +142,7 @@ function getSearchHistory() {
         searchHistoryStrs = JSON.parse(searchHistoryJsonStr);
     } else {
         //set default if value if none exists
-        searchHistoryStrs = [""];
+        searchHistoryStrs = ["philadelphia"];
         localStorage.setItem("searchHistoryStrs", searchHistoryStrs);
     }
 
