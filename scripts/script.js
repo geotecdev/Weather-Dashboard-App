@@ -147,6 +147,11 @@ function getSearchHistory() {
         ssBtn.classList = "searchHistoryBtn"
         ssBtn.innerHTML = searchStr;
         if (ssBtn !== null && modalBody != null) {
+            ssBtn.addEventListener("click", function() {
+                searchInput.value = this.textContent;
+                searchBtn.click();
+                searchedCitiesModal.click();
+            })
             modalBody.appendChild(ssBtn);
         }
     }
