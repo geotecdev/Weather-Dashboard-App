@@ -91,7 +91,8 @@ window.onload = function() {
                     //icon
                     let blockImg = document.createElement("img");
                     blockImg.classList = "forecastIcon";
-                    blockImg.setAttribute("src", "./images/sun.png");
+                    let iconRef = ocDate.weather[0].icon;
+                    blockImg.setAttribute("src", `http://openweathermap.org/img/wn/${iconRef}.png`);
                     block.appendChild(blockImg);
 
                     //temp
